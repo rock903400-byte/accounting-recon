@@ -6,15 +6,15 @@ setlocal
 cls
 echo.
 echo ================================================
-echo    ï¿½ï¿½ï¿½`ï¿½ï¿½ï¿½ï¿½ï¿½zï¿½ï¿½ ï¿½X ï¿½ï¿½bï¿½ï¿½Hï¿½oï¿½uï¿½ï¿½ï¿½Æ§ï¿½
+echo    ²§±`ªÀ­û¿z¿ï ¡X ¹ï±b³æ±HµoÀu¥ý±Æ§Ç
 echo ================================================
 echo.
-echo   1. ï¿½ï¿½ï¿½æ²§ï¿½`ï¿½ï¿½ï¿½ï¿½
-echo   2. ï¿½Û­qï¿½zï¿½ï¿½ï¿½ï¿½
-echo   3. ï¿½ï¿½ï¿½ï¿½
+echo   1. °õ¦æ²§±`°»´ú
+echo   2. ¦Û­q¿z¿ï¤ñ¨Ò
+echo   3. µ²§ô
 echo.
 echo ================================================
-set /p CHOICE=ï¿½Ð¿ï¿½Jï¿½ï¶µ (1-3):
+set /p CHOICE=½Ð¿é¤J¿ï¶µ (1-3):
 
 if "%CHOICE%"=="1" goto RUN_ANOMALY
 if "%CHOICE%"=="2" goto FILTER_PERCENT
@@ -24,7 +24,7 @@ goto MENU
 :RUN_ANOMALY
 cls
 echo.
-echo ï¿½ï¿½ï¿½bï¿½ï¿½ï¿½æ²§ï¿½`ï¿½ï¿½ï¿½ï¿½...
+echo ¥¿¦b°õ¦æ²§±`°»´ú...
 echo.
 powershell -ExecutionPolicy Bypass -File "%~dp0find_anomaly_members.ps1" %*
 echo.
@@ -34,7 +34,7 @@ goto MENU
 :FILTER_PERCENT
 cls
 echo.
-echo ï¿½ï¿½ï¿½bï¿½Ì¦Ê¤ï¿½ï¿½ï¿½Lï¿½o M_ï¿½ï¿½bï¿½ï¿½...
+echo ¥¿¦b¨Ì¦Ê¤À¤ñ¹LÂo M_¹ï±b³æ...
 echo.
 powershell -ExecutionPolicy Bypass -File "%~dp0filter_by_percent.ps1" %*
 echo.
@@ -44,5 +44,5 @@ goto MENU
 :END
 cls
 echo.
-echo ï¿½Aï¿½ï¿½ï¿½I
+echo ¦A¨£¡I
 timeout /t 2 /nobreak >nul
