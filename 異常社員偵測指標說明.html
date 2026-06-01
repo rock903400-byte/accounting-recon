@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>異常社員偵測 — 現行指標</title>
+<style>
+  body { font-family: -apple-system,'Segoe UI','Noto Sans TC','Microsoft JhengHei',sans-serif; max-width: 780px; margin: 40px auto; padding: 0 20px; background: #f5f5f5; }
+  h1 { color: #c0392b; border-left: 5px solid #c0392b; padding-left: 15px; font-size: 22px; }
+  h2 { color: #2c3e50; margin: 24px 0 12px; border-bottom: 2px solid #ddd; padding-bottom: 5px; font-size: 16px; }
+  table { width: 100%; border-collapse: collapse; background: #fff; box-shadow: 0 1px 4px rgba(0,0,0,.1); margin: 12px 0; }
+  th, td { padding: 8px 10px; text-align: left; border-bottom: 1px solid #eee; font-size: 13px; }
+  th { background: #2c3e50; color: #fff; font-weight: 600; }
+  tr:hover { background: #f0f7ff; }
+  .badge { display: inline-block; background: #c0392b; color: #fff; border-radius: 50%; width: 22px; height: 22px; text-align: center; line-height: 22px; font-size: 11px; font-weight: 700; margin-right: 4px; }
+  .new { background: #d4edda; }
+  .tag { display: inline-block; font-size: 11px; padding: 1px 6px; border-radius: 3px; font-weight: 600; }
+  .tag-new { background: #d4edda; color: #155724; }
+  hr { border: none; border-top: 1px solid #ddd; margin: 20px 0; }
+</style>
+
+<h1>異常社員偵測 — 現行指標</h1>
+<p style="color:#888;font-size:14px;">15 項指標 · 最高 52 分</p>
+
+<h2>原始 12 項</h2>
+<table>
+<tr><th>#</th><th>指標</th><th>權重</th><th>偵測邏輯</th></tr>
+<tr><td><span class="badge">1</span></td><td>股金差額</td><td>5</td><td>LGR 股金餘額 ≠ SER 股金餘額</td></tr>
+<tr><td><span class="badge">2</span></td><td>貸款差額</td><td>5</td><td>LGR 貸款餘額 ≠ SER 貸款餘額</td></tr>
+<tr><td><span class="badge">3</span></td><td>備轉金差額</td><td>5</td><td>LGR 備轉金餘額 ≠ SER 備轉金餘額</td></tr>
+<tr><td><span class="badge">4</span></td><td>逾期貸款</td><td>1~4</td><td>BOROW.OWEBR > 0，每 5 萬 +1 分，上限 4 分</td></tr>
+<tr><td><span class="badge">5</span></td><td>非社員貸款</td><td>5</td><td>BOROW 有此人但 SER 查無</td></tr>
+<tr><td><span class="badge">6</span></td><td>未成年貸款</td><td>4</td><td>年齡 < 18 歲仍有放款餘額</td></tr>
+<tr><td><span class="badge">7</span></td><td>查核期新增貸款</td><td>4</td><td>查核期內 BOROW.DAT 有新貸款</td></tr>
+<tr><td><span class="badge">8</span></td><td>利率異常</td><td>3</td><td>放款利率與 RATE 費率表不一致</td></tr>
+<tr><td><span class="badge">9</span></td><td>LP 非出險貸款</td><td>2</td><td>LAW='N'、期數≤84、年齡<70</td></tr>
+<tr><td><span class="badge">10</span></td><td>同地址多戶貸款</td><td>2</td><td>≥3 戶同地址皆有放款</td></tr>
+<tr><td><span class="badge">11</span></td><td>近期交易</td><td>1</td><td>查核期內 LGR 交易次數</td></tr>
+<tr><td><span class="badge">12</span></td><td>有餘額</td><td>1</td><td>LGR 有餘額即給基本分</td></tr>
+</table>
+
+<h2>新加 3 項</h2>
+<table>
+<tr><th>#</th><th>指標</th><th>權重</th><th>偵測邏輯</th></tr>
+<tr class="new"><td><span class="badge">13</span></td><td>非正規社員活動 <span class="tag tag-new">新增</span></td><td>3</td><td>TYPE='2' 仍有 LGR 交易或放款</td></tr>
+<tr class="new"><td><span class="badge">14</span></td><td>關係人放款 <span class="tag tag-new">新增</span></td><td>3</td><td>同 GRPNO 多人皆有放款</td></tr>
+<tr class="new"><td><span class="badge">15</span></td><td>新入社立即貸款 <span class="tag tag-new">新增</span></td><td>2</td><td>INDAT 在查核期內且有貸款</td></tr>
+</table>
+
+<hr>
+<p style="color:#888;font-size:12px;text-align:center;">Credit Union Anomaly Detection · 2026</p>

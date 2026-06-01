@@ -1,0 +1,23 @@
+# Access 資料庫（含社員個資，絕不進版控）
+*.mdb
+*.accdb
+
+# 輸出 CSV（含個資）
+*.csv
+
+# 暫存/備份
+*.bak
+*.tmp
+*.log
+*.swp
+*~
+~$*
+
+# Windows / macOS
+Thumbs.db
+.DS_Store
+
+# IDE
+.vs/
+.idea/
+*.user
