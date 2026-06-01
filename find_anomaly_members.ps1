@@ -6,13 +6,28 @@
 
 param(
     [string]$CubPath = "",
-    [string]$CubPassword = "REDACTED"
+    [string]$CubPassword = ""
 )
 
 Set-Location (Split-Path -Parent $MyInvocation.MyCommand.Path)
 
 $libPath = Join-Path $PSScriptRoot 'lib\AnomalyScore.psm1'
 if (Test-Path $libPath) { Import-Module $libPath -Force -DisableNameChecking }
+
+if ([string]::IsNullOrEmpty($CubPassword)) {
+    Write-Host "════════════════════════════════════════════════════════════════════════════════════" -ForegroundColor Yellow
+    Write-Host "║   CUB.MDB 需要密碼                                          ║" -ForegroundColor Yellow
+    Write-Host "║   提示: 也可用 -CubPassword <密碼> 略過此詢問                ║" -ForegroundColor Yellow
+    Write-Host "════════════════════════════════════════════════════════════════════════════════════" -ForegroundColor Yellow
+    $secure = Read-Host -Prompt "  請輸入 CUB.MDB 密碼" -AsSecureString
+    $ptr = [System.Runtime.InteropServices.Marshal]::SecureStringToBSTR($secure)
+    try {
+        $CubPassword = [System.Runtime.InteropServices.Marshal]::PtrToStringAuto($ptr)
+    } finally {
+        [System.Runtime.InteropServices.Marshal]::ZeroFreeBSTR($ptr) | Out-Null
+    }
+    Write-Host ""
+}
 
 # ── 檢查 0：DAO.DBEngine 初始化（自動切換 64/32-bit）──────────────────────────
 $daoAvailable = $false
@@ -84,8 +99,7 @@ try {
             Write-Host "════════════════════════════════════════════════════════════════════════════════════" -ForegroundColor Red
             Write-Host "║   CUB.MDB 密碼有誤，無法開啟                         ║" -ForegroundColor Red
             Write-Host "║   請用 -CubPassword 參數指定密碼                       ║" -ForegroundColor Red
-            Write-Host "║   預設密碼為 REDACTED                                 ║" -ForegroundColor Red
-            Write-Host("║   範例: .\run_anomaly_check.bat -CubPassword REDACTED") -ForegroundColor Red
+            Write-Host "║   範例: powershell -File find_anomaly_members.ps1 -CubPassword <密碼>" -ForegroundColor Red
             Write-Host "╚═══════════════════════════════════════════════════════════════════════════════════" -ForegroundColor Red
         } else {
             Write-Host "  CUB.MDB 無法開啟，可能不是有效的 Access 資料庫" -ForegroundColor Red

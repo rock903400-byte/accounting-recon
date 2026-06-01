@@ -1,6 +1,6 @@
 ﻿# filter_by_percent.ps1 — 依比例挑選前 N% 異常社員
 param(
-    [string]$CubPassword = "REDACTED",
+    [string]$CubPassword = "",
     [int]$Percent = 0
 )
 
@@ -8,6 +8,21 @@ Set-Location (Split-Path -Parent $MyInvocation.MyCommand.Path)
 
 $libPath = Join-Path $PSScriptRoot 'lib\AnomalyScore.psm1'
 if (Test-Path $libPath) { Import-Module $libPath -Force -DisableNameChecking }
+
+if ([string]::IsNullOrEmpty($CubPassword)) {
+    Write-Host "════════════════════════════════════════════════════════════════════════════════════" -ForegroundColor Yellow
+    Write-Host "║   CUB.MDB 需要密碼                                          ║" -ForegroundColor Yellow
+    Write-Host "║   提示: 也可用 -CubPassword <密碼> 略過此詢問                ║" -ForegroundColor Yellow
+    Write-Host "════════════════════════════════════════════════════════════════════════════════════" -ForegroundColor Yellow
+    $secure = Read-Host -Prompt "  請輸入 CUB.MDB 密碼" -AsSecureString
+    $ptr = [System.Runtime.InteropServices.Marshal]::SecureStringToBSTR($secure)
+    try {
+        $CubPassword = [System.Runtime.InteropServices.Marshal]::PtrToStringAuto($ptr)
+    } finally {
+        [System.Runtime.InteropServices.Marshal]::ZeroFreeBSTR($ptr) | Out-Null
+    }
+    Write-Host ""
+}
 
 # ── DAO.DBEngine 初始化（自動切換 64/32-bit）──────────────────────────
 $daoAvailable = $false
