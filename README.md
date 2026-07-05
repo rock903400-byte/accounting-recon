@@ -1,5 +1,7 @@
 # accounting-recon
 
+![CI](https://github.com/rock903400-byte/accounting-recon/actions/workflows/ci.yml/badge.svg)
+
 > 對帳單異常社員偵測工具 — PowerShell 開源版
 
 ## 功能
