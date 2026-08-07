@@ -1,6 +1,7 @@
 # accounting-recon
 
-![CI](https://github.com/rock903400-byte/accounting-recon/actions/workflows/ci.yml/badge.svg)
+[![CI](https://github.com/rock903400-byte/accounting-recon/actions/workflows/ci.yml/badge.svg)](https://github.com/rock903400-byte/accounting-recon/actions/workflows/ci.yml)
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 
 > 對帳單異常社員偵測工具 — PowerShell 開源版
 
